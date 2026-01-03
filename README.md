@@ -1,6 +1,6 @@
-##Title: "AI-Driven Automatic Telecom Complaint Handling System With Multi-Channel & Multilingual Intelligence"
+Title: "AI-Driven Automatic Telecom Complaint Handling System With Multi-Channel & Multilingual Intelligence"
 
-##Problem Statement:
+Problem Statement:
 Telecom companies handle a massive number of customer complaints every day through calls, messages, and support tickets.
 The current complaint-handling process faces several challenges:
 1.Manual complaint analysis is time-consuming
@@ -10,7 +10,7 @@ The current complaint-handling process faces several challenges:
 5.Customers experience delays and dissatisfaction
 6.There is a strong need for an intelligent, automated, and scalable system that can understand customer complaints accurately and respond quickly.
 
-##Proposed Solution:
+Proposed Solution:
 This project proposes an AI-driven automatic telecom complaint handling system that uses machine learning and natural language processing (NLP) to automate the entire complaint workflow.
 The system:
 1.Accepts complaints from multiple channels (text and voice)
@@ -20,7 +20,7 @@ The system:
 5.Generates support tickets instantly
 6.Reduces dependency on manual customer support
 
-##Innovation:
+Innovation:
 1.The key innovations of this project are:
 2.Multilingual Intelligence: Regional language complaints are translated and processed using a unified AI pipeline.
 3.Multi-Channel Input Handling: The system supports both text and voice-based complaints.
@@ -28,7 +28,7 @@ The system:
 5.Unified AI Decision Engine: All complaints are handled by a single intelligent system regardless of input source.
 6.Automation at Scale: Reduces response time and improves customer satisfaction.
 
-##AI & ML Techniques Used:
+AI & ML Techniques Used:
 1.TF-IDF for text vectorization
 2.Naive Bayes for complaint classification
 3.Sentiment Analysis to detect customer emotion
@@ -36,7 +36,7 @@ The system:
 5.Language Translation for multilingual support
 6.Rule-based AI logic for priority assignment
 
-##Technology Stack:
+Technology Stack:
 Frontend: HTML, CSS, JavaScript
 Backend: Python, Flask
 AI / ML: Scikit-learn, NLP
