@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telecom Complaint AI</title>
+
+    <!-- CSS -->
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        textarea {
+            width: 60%;
+            height: 120px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            background: white;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>AI-Driven Telecom Complaint Handling</h1>
+
+<textarea id="complaint" placeholder="Enter your complaint..."></textarea>
+<br><br>
+
+<button onclick="submitComplaint()">Submit</button>
+
+<div id="result"></div>
+
+<!-- JavaScript -->
+<script>
+    function submitComplaint() {
+        let text = document.getElementById("complaint").value;
+
+        if (text.trim() === "") {
+            alert("Please enter a complaint");
+            return;
+        }
+
+        fetch("/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "complaint=" + encodeURIComponent(text)
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("result").innerHTML = `
+                <p><b>Ticket ID:</b> ${data.ticket_id}</p>
+                <p><b>Detected Language:</b> ${data.language}</p>
+                <p><b>Category:</b> ${data.category}</p>
+                <p><b>Sentiment:</b> ${data.sentiment}</p>
+                <p><b>Priority:</b> ${data.priority}</p>
+            `;
+        })
+        .catch(error => {
+            document.getElementById("result").innerHTML =
+                "<p style='color:red;'>Error submitting complaint</p>";
+        });
+    }
+</script>
+
+</body>
+</html>
