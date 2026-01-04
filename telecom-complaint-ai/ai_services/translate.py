@@ -1,14 +1,20 @@
-from langdetect import detect
 from googletrans import Translator
+from langdetect import detect
 
 translator = Translator()
 
 def translate_to_english(text):
     try:
-        lang = detect(text)
-        if lang != "en":
+        detected_lang = detect(text)
+
+        # Force Telugu / Hindi / others to English
+        if detected_lang != "en":
             translated = translator.translate(text, dest="en")
-            return translated.text, lang
+            return translated.text, detected_lang
+
         return text, "en"
+
     except:
-        return text, "unknown"
+        # If detection fails, still try translation
+        translated = translator.translate(text, dest="en")
+        return translated.text, "unknown"
