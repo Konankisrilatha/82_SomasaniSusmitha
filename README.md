@@ -20,55 +20,6 @@ The system:
 5.Generates support tickets instantly
 6.Reduces dependency on manual customer support
 
-WorkFlow:
-
-           ┌───────────────┐
-           │   User Layer  │
-           │  (Text/Voice) │
-           └───────┬───────┘
-                   │
-                   ▼
-           ┌───────────────┐
-           │ Frontend JS   │
-           │ (API Request) │
-           └───────┬───────┘
-                   │
-                   ▼
-           ┌───────────────┐
-           │ Flask Backend │
-           │   (API)       │
-           └───────┬───────┘
-                   │
-        ┌──────────┼──────────┐
-        ▼          ▼          ▼
- ┌────────────┐ ┌────────────┐ ┌────────────┐
- │ Language & │ │ Complaint  │ │ Sentiment  │
- │ Translation│ │ Classification │ Analysis │
- └──────┬─────┘ └──────┬─────┘ └──────┬─────┘
-        │              │              │
-        └──────────┬──────────┬──────┘
-                   ▼          ▼
-            ┌───────────────┐
-            │ Priority Logic │
-            │ (Hybrid AI +  │
-            │ Rule-based)   │
-            └───────┬───────┘
-                    │
-                    ▼
-           ┌─────────────────┐
-           │   JSON Output   │
-           │ Category,       │
-           │ Sentiment,      │
-           │ Priority        │
-           └───────┬─────────┘
-                   │
-                   ▼
-           ┌───────────────┐
-           │ Frontend UI   │
-           │ Displays Info │
-           └───────────────┘
-
-
 Innovation:
 1.The key innovations of this project are:
 2.Multilingual Intelligence: Regional language complaints are translated and processed using a unified AI pipeline.
