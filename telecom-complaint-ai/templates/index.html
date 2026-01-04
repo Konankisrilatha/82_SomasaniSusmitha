@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <title>Telecom Complaint AI</title>
 
-    <!-- CSS -->
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 40px;
             background-color: #f4f6f8;
         }
 
         h1 {
-            color: #333;
+            color: #222;
         }
 
         textarea {
@@ -22,15 +21,19 @@
             height: 120px;
             font-size: 16px;
             padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         button {
-            padding: 10px 25px;
+            padding: 10px 20px;
+            margin: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
             background-color: #007bff;
             color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
         }
 
         button:hover {
@@ -38,59 +41,87 @@
         }
 
         #result {
-            margin-top: 20px;
-            font-size: 18px;
+            margin-top: 25px;
             background: white;
+            padding: 18px;
             display: inline-block;
-            padding: 15px;
-            border-radius: 5px;
+            border-radius: 6px;
+            text-align: left;
+            min-width: 350px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 
 <body>
 
-<h1>AI-Driven Telecom Complaint Handling</h1>
+<h1>AI-Driven Telecom Complaint Handling System</h1>
 
-<textarea id="complaint" placeholder="Enter your complaint..."></textarea>
+<textarea id="complaint" placeholder="Type or speak your complaint (English / Telugu / Hindi)..."></textarea>
 <br><br>
 
+<button onclick="startVoice()">🎤 Speak</button>
 <button onclick="submitComplaint()">Submit</button>
 
 <div id="result"></div>
 
-<!-- JavaScript -->
 <script>
-    function submitComplaint() {
-        let text = document.getElementById("complaint").value;
+let recognition;
 
-        if (text.trim() === "") {
-            alert("Please enter a complaint");
-            return;
-        }
-
-        fetch("/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "complaint=" + encodeURIComponent(text)
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("result").innerHTML = `
-                <p><b>Ticket ID:</b> ${data.ticket_id}</p>
-                <p><b>Detected Language:</b> ${data.language}</p>
-                <p><b>Category:</b> ${data.category}</p>
-                <p><b>Sentiment:</b> ${data.sentiment}</p>
-                <p><b>Priority:</b> ${data.priority}</p>
-            `;
-        })
-        .catch(error => {
-            document.getElementById("result").innerHTML =
-                "<p style='color:red;'>Error submitting complaint</p>";
-        });
+// 🎤 Voice input
+function startVoice() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Voice input not supported in this browser");
+        return;
     }
+
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = 'te-IN';   // Telugu voice
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onresult = function(event) {
+        document.getElementById("complaint").value =
+            event.results[0][0].transcript;
+    };
+
+    recognition.onerror = function() {
+        alert("Voice recognition error. Please try again.");
+    };
+
+    recognition.start();
+}
+
+// 📤 Submit complaint
+function submitComplaint() {
+    let text = document.getElementById("complaint").value.trim();
+
+    if (text === "") {
+        alert("Please enter or speak a complaint");
+        return;
+    }
+
+    fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "complaint=" + encodeURIComponent(text)
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("result").innerHTML = `
+            <p><b>Ticket ID:</b> ${data.ticket_id}</p>
+            <p><b>Detected Language:</b> ${data.language}</p>
+            <p><b>Translated Text:</b> ${data.translated_text}</p>
+            <p><b>Category:</b> ${data.category}</p>
+            <p><b>Sentiment:</b> ${data.sentiment}</p>
+            <p><b>Priority:</b> ${data.priority}</p>
+        `;
+    })
+    .catch(() => {
+        document.getElementById("result").innerHTML =
+            "<p style='color:red;'>Server error. Try again.</p>";
+    });
+}
 </script>
 
 </body>
